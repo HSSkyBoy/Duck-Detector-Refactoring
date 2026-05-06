@@ -84,6 +84,7 @@ class NativeRootNativeBridge {
     ): NativeRootNativeSnapshot {
         return when (key) {
             "AVAILABLE" -> copy(available = value.asBool())
+            "ROOT_FOUND" -> copy(rootDetected = value.asBool())
             "KERNELSU" -> copy(kernelSuDetected = value.asBool())
             "APATCH" -> copy(aPatchDetected = value.asBool())
             "MAGISK" -> copy(magiskDetected = value.asBool())
@@ -91,7 +92,9 @@ class NativeRootNativeBridge {
             "KSU_VERSION" -> copy(kernelSuVersion = value.toLongOrNull() ?: kernelSuVersion)
             "PRCTL_HIT" -> copy(prctlProbeHit = value.asBool())
             "KERNELPATCH_SIDE_CHANNEL_ATTACK" -> copy(kernelPatchSideChannel = value.asBool())
-            "KERNELPATCH_SIDE_CHANNEL_DETAIL" -> copy(kernelPatchSideChannelDetail = value)
+            "KERNELPATCH_SIDE_CHANNEL_DETAIL" -> copy(kernelPatchSideChannelDetail = value.replace("\\n", "\n"))
+            "DEVPTS_ABNORMAL_PERMISSION_FOUND" -> copy(devptsAbnormalPermission = value.asBool())
+            "DEVPTS_ABNORMAL_PERMISSION_DETAIL" -> copy(devptsAbnormalPermissionDetail = value.replace("\\n", "\n"))
             "KSU_SUPERCALL_ATTEMPTED" -> copy(ksuSupercallAttempted = value.asBool())
             "KSU_SUPERCALL_HIT" -> copy(ksuSupercallProbeHit = value.asBool())
             "KSU_SUPERCALL_BLOCKED" -> copy(ksuSupercallBlocked = value.asBool())

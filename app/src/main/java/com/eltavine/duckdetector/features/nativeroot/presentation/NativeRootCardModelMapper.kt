@@ -75,6 +75,7 @@ class NativeRootCardModelMapper {
                 report.kernelSuDetected -> "KernelSU indicators detected"
                 report.aPatchDetected -> "APatch indicators detected"
                 report.magiskDetected -> "Magisk native indicators detected"
+                report.rootDetected -> "Root indicators detected"
                 report.hasDangerFindings -> "${report.dangerFindingCount} runtime root signal(s)"
                 report.mountAnchorDriftCount > 0 -> "Isolated mount drift suggests namespace tampering"
                 report.mountDriftSignalCount > 0 -> "Isolated-process namespace drift needs review"

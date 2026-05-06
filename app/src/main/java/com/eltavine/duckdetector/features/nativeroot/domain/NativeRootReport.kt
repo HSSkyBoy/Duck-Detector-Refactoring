@@ -69,6 +69,7 @@ data class NativeRootMethodResult(
 data class NativeRootReport(
     val stage: NativeRootStage,
     val findings: List<NativeRootFinding>,
+    val rootDetected: Boolean,
     val kernelSuDetected: Boolean,
     val aPatchDetected: Boolean,
     val magiskDetected: Boolean,
@@ -153,6 +154,7 @@ data class NativeRootReport(
             if (aPatchDetected) add("AP")
             if (magiskDetected) add("Mg")
             if (susfsDetected && !contains("SUSFS")) add("SUSFS")
+            if (rootDetected && !kernelSuDetected && !aPatchDetected && !magiskDetected) add("Root")
         }
 
     companion object {
@@ -160,6 +162,7 @@ data class NativeRootReport(
             return NativeRootReport(
                 stage = NativeRootStage.LOADING,
                 findings = emptyList(),
+                rootDetected = false,
                 kernelSuDetected = false,
                 aPatchDetected = false,
                 magiskDetected = false,

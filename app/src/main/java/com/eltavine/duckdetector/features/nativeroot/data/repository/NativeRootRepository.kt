@@ -80,6 +80,7 @@ class NativeRootRepository(
         return NativeRootReport(
             stage = NativeRootStage.READY,
             findings = findings,
+            rootDetected = snapshot.rootDetected,
             kernelSuDetected = snapshot.kernelSuDetected,
             aPatchDetected = snapshot.aPatchDetected,
             magiskDetected = snapshot.magiskDetected,
@@ -202,6 +203,20 @@ class NativeRootRepository(
                     append("Therefore, it can repeatedly ping __NR_supercall using only \\0 and 128 bytes of \"A\" and compare the time difference to detect KernelPatch. \n")
                     append("This problem already fix in KernelPatch commit 84169d5d6be12e589ccac81d71dcebb80b22043a \n")
                     append("Test Result: ${snapshot.kernelPatchSideChannelDetail}")
+                },
+            ),
+            NativeRootMethodResult(
+                label = "devpts permission check",
+                summary = if (snapshot.devptsAbnormalPermission) "Detected" else "Clean",
+                outcome = if (snapshot.devptsAbnormalPermission) NativeRootMethodOutcome.DETECTED else NativeRootMethodOutcome.CLEAN,
+                detail = buildString {
+                    append("Detect /dev/pts/<pty_id>'s selinux domain and owner uid\n")
+                    append("In normal system, it shouldn't have uid 0/u:object_r:ksu_file:s0 domain\n")
+                    append("But in KernelSU before c3e683683d767749b5015c3b98e920ccade47381 and some KernelSU fork\n")
+                    append("It will change every devpts domain to u:object_r:ksu_file:s0\n")
+                    append("And for uid check, in normal system, user can't open an terminal with root privilege\n")
+                    append("So, if we found uid 0 in PTYs, that's mean currently have an process with root permission\n\n")
+                    append("Test Result: \n${snapshot.devptsAbnormalPermissionDetail}")
                 },
             ),
             NativeRootMethodResult(

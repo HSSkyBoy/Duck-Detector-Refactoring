@@ -26,6 +26,7 @@ data class NativeRootNativeFinding(
 
 data class NativeRootNativeSnapshot(
     val available: Boolean = false,
+    val rootDetected: Boolean = false,
     val kernelSuDetected: Boolean = false,
     val aPatchDetected: Boolean = false,
     val magiskDetected: Boolean = false,
@@ -34,6 +35,8 @@ data class NativeRootNativeSnapshot(
     val prctlProbeHit: Boolean = false,
     val kernelPatchSideChannel: Boolean = false,
     val kernelPatchSideChannelDetail: String = "",
+    val devptsAbnormalPermission: Boolean = false,
+    val devptsAbnormalPermissionDetail: String = "",
     val ksuSupercallAttempted: Boolean = false,
     val ksuSupercallProbeHit: Boolean = false,
     val ksuSupercallBlocked: Boolean = false,
